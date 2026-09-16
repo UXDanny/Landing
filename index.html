@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Danny Apaza — Producción en vivo, edición &amp; diseño</title>
+<meta name="description" content="Danny Apaza — operario OBS experto, editor avanzado, marketing y diseño multimedia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream: #f2f4f3;
+    --cream-2: #e6ebea;
+    --ink: #0f1614;
+    --gray: #6c716f;
+    --accent: #17a398;
+    --accent-ink: #f2f4f3;
+    --line: #d7dedc;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap{ max-width: 1180px; margin: 0 auto; padding: 0 40px; }
+  @media (max-width: 640px){ .wrap{ padding: 0 22px; } }
+
+  a{ color: inherit; }
+  p{ margin: 0; }
+
+  .eyebrow{
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .label{
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 14px;
+  }
+
+  h1, h2, h3{
+    margin: 0;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.06;
+  }
+
+  .pill{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 999px;
+    padding: 13px 24px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1.5px solid var(--ink);
+  }
+  .pill-fill{ background: var(--ink); color: var(--cream); }
+  .pill-fill:hover{ opacity: 0.85; }
+  .pill-outline{ background: transparent; color: var(--ink); }
+  .pill-outline:hover{ background: rgba(22,22,15,0.05); }
+
+  /* ---------- Header ---------- */
+  header{
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    padding: 18px 0;
+    background: rgba(242,244,243,0.72);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid rgba(215,222,220,0.6);
+  }
+  nav.wrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand{ font-weight: 800; font-size: 1.1rem; }
+  .navlinks{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .navlinks a{ text-decoration: none; }
+  .navlinks a:not(.pill):hover{ opacity: 0.6; }
+  @media (max-width: 700px){ .navlinks a:not(.pill){ display: none; } }
+
+  /* ---------- Hero ---------- */
+  .hero{ padding: 138px 0 96px; }
+  .hero-grid{
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 40px;
+    align-items: center;
+  }
+  @media (max-width: 860px){ .hero-grid{ grid-template-columns: 1fr; } }
+
+  .hero h1{
+    font-size: clamp(2.6rem, 5.6vw, 4.4rem);
+  }
+  .hero h1 .muted{ color: var(--gray); font-weight: 800; }
+
+  .hero-lead{
+    margin-top: 22px;
+    max-width: 46ch;
+    color: var(--gray);
+    font-size: 1rem;
+  }
+  .hero-actions{
+    margin-top: 30px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .hero-art{
+    position: relative;
+    min-height: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .rings{
+    position: absolute;
+    width: 340px; height: 340px;
+    border-radius: 50%;
+    border: 40px solid var(--cream-2);
+  }
+  .rings::after{
+    content: "";
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+  }
+  .bubble{
+    position: relative;
+    background: var(--accent);
+    border-radius: 20px;
+    padding: 20px 22px;
+    max-width: 230px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    box-shadow: 0 18px 40px -18px rgba(22,22,15,0.35);
+    transform: translate(30px, -10px);
+  }
+  .bubble .b2{ display: block; margin-top: 4px; font-weight: 800; font-size: 1rem; }
+  @media (max-width: 860px){ .hero-art{ min-height: 220px; } .rings{ width: 220px; height: 220px; border-width: 26px; } }
+
+  /* ---------- Pull quote ---------- */
+  section{ padding: 90px 0; }
+  .quote-block .label{ margin-bottom: 14px; }
+  .quote-block p.pre{
+    color: var(--gray);
+    font-size: 0.92rem;
+    max-width: 40ch;
+    margin-bottom: 18px;
+  }
+  .quote-block h2{
+    font-size: clamp(1.7rem, 3.6vw, 2.6rem);
+    max-width: 20ch;
+  }
+  .quote-block h2 .hl{ color: #9a9a86; }
+
+  /* ---------- Section head ---------- */
+  .section-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .section-head h2{ font-size: clamp(1.8rem, 3.2vw, 2.4rem); }
+  .section-head p{ color: var(--gray); max-width: 34ch; font-size: 0.92rem; text-align: right; }
+  @media (max-width: 640px){ .section-head p{ text-align: left; } }
+
+  /* ---------- Video cards ---------- */
+  .video-card{
+    background: #fff;
+    border-radius: 22px;
+    overflow: hidden;
+    margin-bottom: 22px;
+  }
+  .video-frame{
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: #d9d6c9;
+  }
+  .video-frame iframe{
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    border: 0;
+  }
+  .video-placeholder{
+    position: absolute; inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #8f8c7d;
+    font-size: 0.85rem;
+    text-align: center;
+    padding: 20px;
+    pointer-events: none;
+  }
+  .video-placeholder .play{
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: rgba(22,22,15,0.12);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .video-topbar{
+    position: absolute;
+    top: 14px; left: 14px;
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(242,240,232,0.92);
+    border-radius: 999px;
+    padding: 5px 12px 5px 5px;
+    font-size: 0.75rem;
+    z-index: 2;
+  }
+  .video-topbar .avatar{
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--ink); color: var(--cream);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.62rem; font-weight: 700;
+  }
+  .video-topbar strong{ display: block; font-size: 0.72rem; }
+  .video-topbar span{ display: block; color: var(--gray); font-size: 0.65rem; }
+  .video-tag{
+    position: absolute;
+    bottom: 14px; right: 14px;
+    background: var(--ink); color: var(--cream);
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    z-index: 2;
+  }
+  .video-body{ padding: 22px 24px 26px; }
+  .video-meta{
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: var(--gray);
+    margin-bottom: 8px;
+  }
+  .video-body h3{ font-size: 1.15rem; font-weight: 700; letter-spacing: -0.005em; }
+  .video-body p.desc{ margin-top: 6px; color: var(--gray); font-size: 0.88rem; }
+
+  .work-grid-small{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+  @media (max-width: 700px){ .work-grid-small{ grid-template-columns: 1fr; } }
+
+  /* ---------- Services ---------- */
+  .services-section{ background: var(--cream-2); }
+  .service-cols{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 26px;
+  }
+  @media (max-width: 860px){ .service-cols{ grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 500px){ .service-cols{ grid-template-columns: 1fr; } }
+  .service-cols .num{ font-size: 0.75rem; color: var(--gray); font-weight: 700; margin-bottom: 12px; }
+  .service-cols h3{ font-size: 1.02rem; font-weight: 700; }
+  .service-cols p{ color: var(--gray); font-size: 0.86rem; margin-top: 8px; }
+
+  /* ---------- Proceso (oscuro) ---------- */
+  .process-section{ background: var(--ink); color: var(--cream); }
+  .process-section .label{ color: #9a9a86; }
+  .process-section .section-head p{ color: #a6a495; }
+  .process-cols{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 22px;
+  }
+  @media (max-width: 900px){ .process-cols{ grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px){ .process-cols{ grid-template-columns: 1fr; } }
+  .process-cols .num{ font-size: 0.75rem; color: #9a9a86; font-weight: 700; margin-bottom: 12px; }
+  .process-cols h3{ font-size: 1rem; font-weight: 700; color: var(--cream); }
+  .process-cols p{ color: #a6a495; font-size: 0.85rem; margin-top: 8px; }
+
+  /* ---------- Sobre mi ---------- */
+  .about-grid{
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 46px;
+    align-items: center;
+  }
+  @media (max-width: 640px){ .about-grid{ grid-template-columns: 1fr; } }
+  .about-photo{
+    width: 220px; height: 280px;
+    border-radius: 18px;
+    background: linear-gradient(160deg, #cfcabb, #eae7dd);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 2.4rem; color: var(--ink);
+  }
+  .about-copy h2{ font-size: clamp(1.6rem, 3vw, 2.2rem); }
+  .about-copy h2 .muted{ color: var(--gray); }
+  .about-copy p.body{ color: var(--gray); margin-top: 16px; max-width: 56ch; font-size: 0.95rem; }
+  .about-copy p.body + p.body{ margin-top: 10px; }
+
+  /* ---------- Contacto ---------- */
+  .contact-section{
+    background: var(--accent);
+    padding: 90px 0;
+  }
+  .contact-grid{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  .contact-section{ color: var(--accent-ink); }
+  .contact-grid .label{ color: rgba(242,244,243,0.7); }
+  .contact-grid h2{ font-size: clamp(2rem, 4.2vw, 3rem); max-width: 14ch; color: var(--accent-ink); }
+  .contact-grid p{ color: rgba(242,244,243,0.75); margin-top: 14px; max-width: 40ch; font-size: 0.92rem; }
+  .contact-actions{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+  }
+  .contact-actions .pill-fill{ background: var(--accent-ink); color: var(--ink); border-color: var(--accent-ink); }
+  .contact-actions .pill-outline{ border-color: var(--accent-ink); color: var(--accent-ink); }
+
+  footer{
+    padding: 24px 0;
+    font-size: 0.8rem;
+    color: var(--gray);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="brand">Danny.</div>
+    <div class="navlinks">
+      <a href="#trabajos">Trabajos</a>
+      <a href="#servicios">Qué hago</a>
+      <a href="#proceso">Cómo trabajo</a>
+      <a href="https://wa.me/51962712446" class="pill pill-fill">WhatsApp ↗</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">OPERADOR DE OBS &amp; EDITOR</div>
+      <div class="label">FREELANCE</div>
+      <h1>Danny Apaza.<br>
+        <span class="muted">Tu transmisión, bajo</span><br>
+        control total.
+      </h1>
+      <p class="hero-lead">Manejo OBS a nivel experto, edito el material grabado y le doy forma visual a tu marca: marketing y diseño multimedia incluidos.</p>
+      <div class="hero-actions">
+        <a href="#trabajos" class="pill pill-fill">Ver mis trabajos</a>
+        <a href="#contacto" class="pill pill-outline">Quiero trabajar contigo</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="rings"></div>
+      <div class="bubble">
+        Una transmisión no tiene que verse complicada.
+        <span class="b2">Tiene que verse profesional.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="quote-block">
+  <div class="wrap">
+    <div class="label">LO QUE HAGO NO ES SOLO APRETAR BOTONES</div>
+    <h2>Es saber <span class="hl">cuándo</span> cortar a cámara, cuándo bajar el audio y cuándo dejar que la escena respire.</h2>
+  </div>
+</section>
+
+<section id="trabajos">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="label">PORTAFOLIO</div>
+        <h2>Algunos trabajos</h2>
+      </div>
+      <p>Una mezcla de transmisiones en vivo, edición y piezas de marketing pensadas para comunicar o vender.</p>
+    </div>
+
+    <div class="video-card">
+      <div class="video-frame">
+        <!-- Reemplaza con tu link embed de YouTube, ej: https://www.youtube-nocookie.com/embed/TU_VIDEO_ID -->
+        <iframe src="" title="Evento en vivo" loading="lazy" allowfullscreen></iframe>
+        <div class="video-placeholder">
+          <div class="play">▶</div>
+          <span>Pega aquí tu link embed de YouTube</span>
+        </div>
+        <div class="video-topbar">
+          <span class="avatar">DA</span>
+          <span><strong>Evento_En_Vivo</strong><span>Danny Apaza</span></span>
+        </div>
+        <div class="video-tag">Mirar en YouTube</div>
+      </div>
+      <div class="video-body">
+        <div class="video-meta">01 · EN VIVO</div>
+        <h3>Switcheo de evento sin cortes ni errores técnicos.</h3>
+        <p class="desc">Manejo completo de escenas, audio y overlays durante una transmisión en tiempo real.</p>
+      </div>
+    </div>
+
+    <div class="work-grid-small">
+      <div class="video-card">
+        <div class="video-frame">
+          <iframe src="" title="Highlights de stream" loading="lazy" allowfullscreen></iframe>
+          <div class="video-placeholder">
+            <div class="play">▶</div>
+            <span>Pega aquí tu link embed</span>
+          </div>
+          <div class="video-topbar">
+            <span class="avatar">DA</span>
+            <span><strong>Highlights_Stream</strong><span>Danny Apaza</span></span>
+          </div>
+          <div class="video-tag">Mirar en YouTube</div>
+        </div>
+        <div class="video-body">
+          <div class="video-meta">02 · EDICIÓN</div>
+          <h3>Los mejores momentos, listos para redes.</h3>
+          <p class="desc">Clips cortos armados a partir de una transmisión larga.</p>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-frame">
+          <iframe src="" title="Campaña de marketing" loading="lazy" allowfullscreen></iframe>
+          <div class="video-placeholder">
+            <div class="play">▶</div>
+            <span>Pega aquí tu link embed</span>
+          </div>
+          <div class="video-topbar">
+            <span class="avatar">DA</span>
+            <span><strong>Campaña_Lanzamiento</strong><span>Danny Apaza</span></span>
+          </div>
+          <div class="video-tag">Mirar en YouTube</div>
+        </div>
+        <div class="video-body">
+          <div class="video-meta">03 · MARKETING</div>
+          <h3>Contenido pensado para acompañar un lanzamiento.</h3>
+          <p class="desc">Piezas de video hechas para comunicar y vender.</p>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-frame">
+          <iframe src="" title="Overlays e identidad de canal" loading="lazy" allowfullscreen></iframe>
+          <div class="video-placeholder">
+            <div class="play">▶</div>
+            <span>Pega aquí tu link embed</span>
+          </div>
+          <div class="video-topbar">
+            <span class="avatar">DA</span>
+            <span><strong>Identidad_De_Canal</strong><span>Danny Apaza</span></span>
+          </div>
+          <div class="video-tag">Mirar en YouTube</div>
+        </div>
+        <div class="video-body">
+          <div class="video-meta">04 · DISEÑO</div>
+          <h3>Overlays y escenas con identidad propia.</h3>
+          <p class="desc">Elementos visuales diseñados para que un canal se vea consistente.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="servicios" class="services-section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="label">QUÉ HAGO</div>
+        <h2>Tu proyecto, resuelto de punta a punta.</h2>
+      </div>
+    </div>
+    <div class="service-cols">
+      <div>
+        <div class="num">01</div>
+        <h3>Operación de OBS</h3>
+        <p>Escenas, audio y transiciones manejadas en vivo, sin errores técnicos.</p>
+      </div>
+      <div>
+        <div class="num">02</div>
+        <h3>Edición avanzada</h3>
+        <p>Ritmo, color y sonido trabajados hasta dejar el video listo para publicar.</p>
+      </div>
+      <div>
+        <div class="num">03</div>
+        <h3>Marketing</h3>
+        <p>Piezas y contenido pensado para que tu video llegue a más personas.</p>
+      </div>
+      <div>
+        <div class="num">04</div>
+        <h3>Diseño multimedia</h3>
+        <p>Overlays y gráficas que le dan identidad visual a tu canal o marca.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="proceso" class="process-section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="label">CÓMO TRABAJO</div>
+        <h2>Sin complicarlo.</h2>
+      </div>
+      <p>La idea es que trabajar juntos sea simple desde el primer mensaje hasta la entrega.</p>
+    </div>
+    <div class="process-cols">
+      <div>
+        <div class="num">01</div>
+        <h3>Me cuentas la idea</h3>
+        <p>Qué necesitas y para qué es: evento en vivo, edición o pieza gráfica.</p>
+      </div>
+      <div>
+        <div class="num">02</div>
+        <h3>Preparo todo</h3>
+        <p>Escenas, overlays y equipo listos antes de grabar o salir en vivo.</p>
+      </div>
+      <div>
+        <div class="num">03</div>
+        <h3>Produzco o edito</h3>
+        <p>Opero la transmisión, o trabajo el material grabado con buen ritmo.</p>
+      </div>
+      <div>
+        <div class="num">04</div>
+        <h3>Revisamos</h3>
+        <p>Hacemos los ajustes necesarios antes de la entrega final.</p>
+      </div>
+      <div>
+        <div class="num">05</div>
+        <h3>Entrego</h3>
+        <p>Recibes el archivo final, listo para salir al aire o publicar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap about-grid">
+    <div class="about-photo">DA</div>
+    <div class="about-copy">
+      <div class="label">SOBRE MÍ</div>
+      <h2>No busco solo que funcione. <span class="muted">Busco que se vea bien.</span></h2>
+      <p class="body">Soy Danny Apaza. Manejo OBS a nivel experto y edito video de forma avanzada, con años dirigiendo comunicaciones, marketing y contenido gráfico/audiovisual para organizaciones culturales y educativas.</p>
+      <p class="body">Mi objetivo es que cada proyecto salga sin errores técnicos y con una identidad visual clara, sea un evento en vivo, un video editado o una campaña.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" class="contact-section">
+  <div class="wrap contact-grid">
+    <div>
+      <div class="label">¿TIENES UN PROYECTO?</div>
+      <h2>Cuéntame qué quieres hacer.</h2>
+      <p>No hace falta que tengas todo resuelto. Cuéntame qué necesitas y vemos cómo llevarlo a la pantalla.</p>
+    </div>
+    <div class="contact-actions">
+      <a href="https://wa.me/51962712446" class="pill pill-fill">Escribirme por WhatsApp ↗</a>
+      <a href="mailto:dny.svg@gmail.com" class="pill pill-outline">Enviar email</a>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div>© 2026 Danny Apaza. Todos los derechos reservados.</div>
+  <div>Producción en vivo · Edición · Diseño</div>
+</footer>
+
+</body>
+</html>
